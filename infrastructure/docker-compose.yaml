@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:18
+    image: postgres:18-alpine
     container_name: postgres
     restart: unless-stopped
     ports:
@@ -16,6 +16,35 @@ services:
         interval: 10s
         retries: 5
 
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 5s
+      retries: 5
+
+  cassandra:
+    image: cassandra:5
+    container_name: cassandra
+    ports:
+        - "9042:9042"
+    environment:
+      CASSANDRA_CLUSTER_NAME: "TelemetryCluster"
+      CASSANDRA_NUM_TOKENS: 1
+    volumes:
+      - cassandra_data:/var/lib/cassandra
+    healthcheck:
+      test: [ "CMD-SHELL", "nodetool status | grep -q 'UN'" ]
+      interval: 5s
+      retries: 5
+
 
 volumes:
   postgres_data:
+  cassandra_data:

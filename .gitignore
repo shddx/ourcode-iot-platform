@@ -28,7 +28,6 @@ gradle-task-name-cache.bin
 
 ### Env / secrets ###
 .env
-.env.*
 *.env
 *.secret.*
 *.key

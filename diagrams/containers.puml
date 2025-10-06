@@ -1,0 +1,10 @@
+@startuml Containers
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+System_Ext(kafka, "Kafka Cluster", "Шина данных")
+System_Ext(redis, "In-memory Cache", "Кеш данных")
+System_Ext(postgres, "PostgreSQL", "Основное хранилище данных")
+System_Ext(minio, "MinIO", "Объектное хранилище")
+System_Ext(cassandra, "Cassandra Cluster", "Хранилище телеметрии")
+System_Ext(keycloak, "Keycloak", "Аутентификация и авторизация")
+System_Ext(camunda, "Camunda", "Оркестрация процессов")
+@enduml
